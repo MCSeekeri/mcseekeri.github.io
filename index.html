@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>不要老是想着搞个大新闻</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsify@4/lib/themes/vue.css" />
+    <link rel="stylesheet" href="https://unpkg.com/@waline/client@v3/dist/waline.css" />
+  </head>
+  <body>
+    <div id="app"></div>
+    <script type="module">
+      import { init } from 'https://unpkg.com/@waline/client@v3/dist/waline.js'
+      window.mountWaline = () =>
+        init({
+          el: '#waline',
+          serverURL: 'https://comments.mcseekeri.com',
+          path: '/vibe',
+          lang: 'zh-CN',
+        })
+    </script>
+    <script>
+      window.$docsify = {
+        homepage: 'index.md',
+        markdown: {
+          breaks: true,
+        },
+        plugins: [
+          function (hook) {
+            hook.afterEach(function (html) {
+              return html + '\n<div id="waline"></div>'
+            })
+
+            hook.doneEach(function () {
+              if (window.mountWaline) window.mountWaline()
+            })
+          },
+        ],
+      }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/docsify@4"></script>
+  </body>
+</html>
